@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- 
+            Things we'll learn: 
+            1. How to use @supports feature queries.
+            2. Implement graceful degradation on selected properties.
+            3. How to use backdrop-filter.
+        -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet">
+
+        
+        <!-- Uncomment for development -->
+        <!-- <link rel="stylesheet" href="css/icon-font.css"> -->
+        <!-- <link rel="stylesheet" href="css/style.css">  -->
+       
+
+        <!-- Uncomment for production -->
+        <link rel="stylesheet" href="css/style.min.css">
+        
+        <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+        
+        <title>Nature Tours | Exciting Tours For Adventurous People</title>
+    </head>
+    <body>
+        <!-- 
+            We create a checkbox and use the checked pseudo-class to make a navigation (hamburger) button, which we will use for the navigation in our website.
+            Eventually, we'll hide the checkbox and simply use the label related to the checkbox as an extension to whether the checkbox has been clicked or not.
+         -->
+        <div class="navigation">
+            <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+            
+            <label for="navi-toggle" class="navigation__button">
+                <span class="navigation__icon">&nbsp;</span>
+            </label>
+            
+            <div class="navigation__background">&nbsp;</div>
+            <nav class="navigation__nav">
+                <ul class="navigation__list">
+                    <li class="navigation__item"><a href="#section-about" class="navigation__link"><span>01</span>About Nature Tours</a></li>
+                    <li class="navigation__item"><a href="#section-features" class="navigation__link"><span>02</span>Your benefits</a></li>
+                    <li class="navigation__item"><a href="#section-tours" class="navigation__link"><span>03</span>Popular tours</a></li>
+                    <li class="navigation__item"><a href="#section-stories" class="navigation__link"><span>04</span>Stories</a></li>
+                    <li class="navigation__item"><a href="#section-book" class="navigation__link"><span>05</span>Book now</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <header class="header" id="header">
+            <div class="header__logo-box">
+                <img src="img/logo-white.png" alt="logo" class="header__logo">
+            </div>
+
+            <div class="header__text-box">
+                <h1 class="heading-primary">
+                    <span class="heading-primary--main">Outdoors</span>
+                    <span class="heading-primary--sub">is where life happens</span>
+                </h1>
+                
+                <a href="#section-tours" class="btn btn--white btn--animated">Discover our tours</a>
+            </div>
+        </header>
+
+        <!-- main element is used to tell the search engines that the markup inside the main tag is the most crucial part of the website and contains the main part of the website -->
+        <main>
+            <section class="section-about" id="section-about">
+                <!-- .u-center-text is a utility class. Utility classes in SASS are very simple classes in CSS which only have one simple goal. In this case, it simply to center the text. -->
+                <div class="u-center-text u-margin-bottom-big">
+                    <h2 class="heading-secondary">
+                        Exciting tours for adventurous people
+                    </h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-1-of-2">
+                        <h3 class="heading-tertiary u-margin-bottom-small">
+                            You're going to fall in love with nature
+                        </h3>
+                        <p class="paragraph">
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci, laboriosam deleniti. Vel quae quas, officiis, illo vero beatae officia cupiditate quibusdam at quis commodi nesciunt voluptas in voluptates. Vel, tenetur.
+                        </p>
+
+                        <h3 class="heading-tertiary u-margin-bottom-small">
+                            Live adventures like you never have before
+                        </h3>
+                        <p class="paragraph">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae atque maiores illum vitae impedit, provident voluptas ad, distinctio debitis dolorem rem.
+                        </p>
+
+                        <a href="#" class="btn-text">Learn more &rarr;</a>
+                    </div>
+                    <div class="col-1-of-2">
+                        <div class="composition">
+
+                            <!-- 
+                                Unlike in art direction where we basically force the browser to use a certain image according to a media query, in this situation right now, we allow the browser to choose the best image for the current viewport and the pixel density situation we have.
+
+                                Therefore, here we are applying Density Switching and Resolution Switching.
+
+                                We will use the <img> element with the srcset attribute where we specify which image to use along with the width descriptor where we specify the width of the image so that the browser loses the extra step of downloading the image to know the width of the image.
+
+                                That alone is NOT sufficient for the browser to decide which image to download for the use-case, because what the browser knows till now is the viewport width of the image and the display density of the image.
+
+                                We have to give the browser more information about the images being used for the use-case using the sizes attribute where we inform the browser about the approx width of the image(s) at different viewport width.
+
+                                In the sizes attribute in the <img> element, we mention media queries for different breakpoints using either the max-width or min-width property. Example, for a viewport with a 900px width, to show an image with width of 170px, we divide the image width against the viewport width i.e., (171/900)px * 100 = 19px, which is approximately, 20px of the viewport width (which is 900px), therefore, we mention 20vw along with the media query, as shown below.
+
+                                We mention the breakpoints for 900px (56.25em) and 600px (37.25em). Default size is 300px (18.75em).
+
+                                In the end, we shall use the normal src attribute where we mention the image's relative path as usual. We use the src attribute for older browser compatibility, in-case the webpage is opened using an older browser where srcset attribute is not supported.
+                             -->
+                            <img srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w"
+                            sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 18.75em" alt="Photo-1" 
+                            class="composition__photo composition__photo--p1" 
+                            src="img/nat-1-large.jpg">
+                            
+                            <img srcset="img/nat-2.jpg 300w, img/nat-2-large.jpg 1000w"
+                            sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 18.75em" alt="Photo-2" 
+                            class="composition__photo composition__photo--p2" 
+                            src="img/nat-2-large.jpg">
+                            
+                            <img srcset="img/nat-3.jpg 300w, img/nat-3-large.jpg 1000w"
+                            sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 18.75em" alt="Photo-3" 
+                            class="composition__photo composition__photo--p3" 
+                            src="img/nat-3-large.jpg">
+
+                            <!--                             
+                            <img src="img/nat-1-large.jpg" alt="Photo-1" class="composition__photo composition__photo--p1">
+                            <img src="img/nat-2-large.jpg" alt="Photo-1" class="composition__photo composition__photo--p3">
+                            <img src="img/nat-3-large.jpg" alt="Photo-1" class="composition__photo composition__photo--p3">
+                             -->
+                        </div>
+                    </div>
+                </div> <!-- end of .row -->
+            </section>
+
+            <section class="section-features" id="section-features">
+                
+                <div class="row">
+                    <div class="col-1-of-4">
+                        <div class="feature-box">
+                            <i class="feature-box__icon icon-basic-world"></i>
+                            <h3 class="heading-tertiary u-margin-bottom-small">Explore the world</h3>
+                            <p class="feature-box__text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi fugiat rem unde eveniet optio, neque quibusdam debitis iure atque dolore.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-1-of-4">
+                        <div class="feature-box">
+                            <i class="feature-box__icon icon-basic-compass"></i>
+                            <h3 class="heading-tertiary u-margin-bottom-small">Meet Nature</h3>
+                            <p class="feature-box__text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi fugiat rem unde eveniet optio, neque quibusdam debitis iure atque dolore.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-1-of-4">
+                        <div class="feature-box">
+                            <i class="feature-box__icon icon-basic-map"></i>
+                            <h3 class="heading-tertiary u-margin-bottom-small">Find your way</h3>
+                            <p class="feature-box__text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi fugiat rem unde eveniet optio, neque quibusdam debitis iure atque dolore.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-1-of-4">
+                        <div class="feature-box">
+                            <i class="feature-box__icon icon-basic-heart"></i>
+                            <h3 class="heading-tertiary u-margin-bottom-small">Live a healthier life</h3>
+                            <p class="feature-box__text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi fugiat rem unde eveniet optio, neque quibusdam debitis iure atque dolore.</p>
+                        </div>
+                    </div>
+
+                </div> <!-- end of .row -->
+
+            </section>
+
+            <section class="section-tours" id="section-tours">
+                <div class="u-center-text u-margin-bottom-big">
+                    <h2 class="heading-secondary">
+                        Most popular tours
+                    </h2>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-1-of-3">
+                        <div class="card">
+                            <div class="card__side card__side--front">
+                                <div class="card__picture card__picture--1">
+                                    &nbsp;    
+                                </div>
+                                <h4 class="card__heading">
+                                    <span class="card__heading-span card__heading-span--1">the sea explorer</span>
+                                </h4>
+                                <div class="card__details">
+                                    <ul>
+                                        <li>3 day tours</li>
+                                        <li>Up to 30 people</li>
+                                        <li>2 tour guides</li>
+                                        <li>Sleep in cozy hotels</li>
+                                        <li>Difficulty: Easy</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card__side card__side--back card__side--back-1">
+                                <div class="card__cta">
+                                    <div class="card__price-box">
+                                        <p class="card__price-only">Only</p>
+                                        <p class="card__price-value">$297</p>
+                                    </div>
+                                    <a href="#popup" class="btn btn--white">Book now!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-1-of-3">
+                        <div class="card">
+                            <div class="card__side card__side--front">
+                                <div class="card__picture card__picture--2">
+                                    &nbsp;
+                                </div>
+                                <h4 class="card__heading">
+                                    <span class="card__heading-span card__heading-span--2">the forest hiker</span>
+                                </h4>
+                                <div class="card__details">
+                                    <ul>
+                                        <li>7 day tours</li>
+                                        <li>Up to 40 people</li>
+                                        <li>6 tour guides</li>
+                                        <li>Sleep in provided tents</li>
+                                        <li>Difficulty: Medium</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card__side card__side--back card__side--back-2">
+                                <div class="card__cta">
+                                    <div class="card__price-box">
+                                        <p class="card__price-only">Only</p>
+                                        <p class="card__price-value">$497</p>
+                                    </div>
+                                    <a href="#popup" class="btn btn--white">Book now!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-1-of-3">
+                        <div class="card">
+                            <div class="card__side card__side--front">
+                                <div class="card__picture card__picture--3">
+                                    &nbsp;
+                                </div>
+                                <h4 class="card__heading">
+                                    <span class="card__heading-span card__heading-span--3">the snow adventurer</span>
+                                </h4>
+                                <div class="card__details">
+                                    <ul>
+                                        <li>5 day tours</li>
+                                        <li>Up to 15 people</li>
+                                        <li>3 tour guides</li>
+                                        <li>Sleep in provided tents</li>
+                                        <li>Difficulty: Hard</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card__side card__side--back card__side--back-3">
+                                <div class="card__cta">
+                                    <div class="card__price-box">
+                                        <p class="card__price-only">Only</p>
+                                        <p class="card__price-value">$897</p>
+                                    </div>
+                                    <a href="#popup" class="btn btn--white">Book now!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>  <!-- end of .row -->
+
+                <div class="u-center-text u-margin-top-huge">
+                    <a href="#" class="btn btn--green">Discover all tours</a>
+                </div>
+                
+            </section>
+            
+            <section class="section-stories" id="section-stories">
+                
+                <!-- background video -->
+                <div class="bg-video">
+                    <video class="bg-video__content" autoplay loop muted>
+                        <source src="img/video.mp4" type="video/mp4">
+                        <source src="img/video.webm" type="video/webm">
+                        Your browser is not supported!
+                    </video>
+                </div>
+
+                <div class="u-center-text u-margin-bottom-big">
+                    <h2 class="heading-secondary">
+                        We make people genuinely happy
+                    </h2>
+                </div>
+                
+                <div class="row">
+                    <div class="story">
+                        <figure class="story__shape">
+                            <img alt="person on a tour" 
+                            srcset="img/nat-8.jpg 1000w"
+                            sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw"
+                            class="story__img"
+                            src="img/nat-8.jpg">
+                            <!-- <img src="img/nat-8.jpg" alt="Person on a tour" class="story__img"> -->
+                            <figcaption class="story__caption">Mary Smith</figcaption>
+                        </figure>
+                        <div class="story__text">
+                            <h3 class="heading-tertiary u-margin-bottom-small">
+                                I had the best week ever with my family
+                            </h3>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo cupiditate nisi consectetur recusandae non qui accusantium reprehenderit repellendus natus quia aut ab illum nesciunt neque, quasi placeat iste mollitia voluptatum. Amet voluptatum culpa aliquam delectus laboriosam vel voluptates obcaecati!
+                            </p>
+                        </div>
+                    </div>
+                </div> <!-- end of .row -->
+                
+                <div class="row">
+                    <div class="story">
+                        <figure class="story__shape">
+                            <img alt="person on a tour" 
+                            srcset="img/nat-9.jpg 1000w" 
+                            sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw"
+                            class="story__img" src="img/nat-9.jpg">
+                            <!-- <img src="img/nat-9.jpg" alt="Person on a tour" class="story__img"> -->
+                            <figcaption class="story__caption">Jack Wilson</figcaption>
+                        </figure>
+                        <div class="story__text">
+                            <h3 class="heading-tertiary u-margin-bottom-small">
+                                WOW! My life is completely different now
+                            </h3>
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto natus minus deleniti rerum quod aspernatur odit sequi at. Voluptatum ipsa tenetur ad, necessitatibus exercitationem quibusdam dolorum voluptas sint quos odio atque dolorem. Earum adipisci doloribus rem. Nostrum eos in provident!
+                            </p>
+                        </div>
+                    </div>
+                </div> <!-- end of .row -->
+                
+                <div class="u-center-text u-margin-top-huge">
+                    <a href="#" class="btn-text">Read all stories &rarr;</a>
+                </div>
+
+            </section>
+
+            <section class="section-book" id="section-book">
+                <div class="row">
+                    <div class="book">
+                        <div class="book__form">
+                            <form action="#" class="form">
+                                <div class="u-margin-bottom-medium">
+                                    <h2 class="heading-secondary">
+                                        Start Booking now!
+                                    </h2>
+                                </div>                                
+                                <div class="form__group">
+                                    <input type="text" class="form__input" placeholder="Full Name" id="name" required>
+                                    <label for="name" class="form__label">Full Name</label>
+                                </div>                                
+                                
+                                <div class="form__group">
+                                    <input type="email" class="form__input" placeholder="Email address" id="email" required>
+                                    <label for="email" class="form__label">Email address</label>                                
+                                </div>
+
+                                <!-- 
+                                    There's no way to do style radio buttons 
+                                    using CSS, and therefore, what we 
+                                    generally do is, we have the usual radio 
+                                    button and a label associated to it.
+                                    
+                                    And then, we hide the actual radio button
+                                    and then put an empty span element 
+                                    inside the label as shown below. We 
+                                    style that span to look as a radio 
+                                    button, so that whenever the user clicks 
+                                    on the styled span element (which looks 
+                                    like a radio button), the user is 
+                                    actually clicking on the label 
+                                    associated to the radio button, and that 
+                                    way, the hidden radio button is also 
+                                    checked because of that click. And 
+                                    that's how we style a radio button. 
+                                 -->
+                                <div class="form__group u-margin-bottom-medium">
+                                    <div class="form__radio-group">
+                                        <input type="radio" class="form__radio-input" name="size" id="small" checked>
+                                        <label for="small" class="form__radio-label">
+                                            <span class="form__radio-button"></span>
+                                            Small tour group
+                                        </label>
+                                    </div>
+                                    <div class="form__radio-group">
+                                        <input type="radio" class="form__radio-input" name="size" id="large">
+                                        <label for="large" class="form__radio-label">
+                                            <span class="form__radio-button"></span>
+                                            Large tour group
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form__group">
+                                    <button class="btn btn--green">Next step &rarr;</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> <!-- end of .row -->
+            </section>
+            
+        </main>
+
+        <footer class="footer" id="footer">
+            <div class="footer__logo-box u-margin-bottom-big">
+                <!-- 
+                    To write media queries in HTML, we use the <picture> element and inside that element, we use the <source> element, where we can use the srcset attribute (for specifying what image to use for the respective resolution/density screens) and the media attribute to specify where to use the images specified in the srcset attribute.
+                 -->
+                <picture>
+                    <!-- max-width <= 600px (37.5em) -->
+                    <source srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x" media="(max-width: 37.5em)" src="img/logo-green-small-2x.png">
+                    
+                    <!-- Provide the normal images after the <source> element -->
+                    <!-- max-width > 600px (37.5em) -->
+                    <img srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x" alt="Full Green Logo" class="footer__logo" src="img/logo-green-2x.png">
+                </picture>
+            </div>
+
+            <div class="row">
+                <div class="col-1-of-2">
+                    <div class="footer__navigation">
+                        <ul class="footer__list">
+                            <li class="footer__item"><a href="#" class="footer__link">Company</a></li>
+                            <li class="footer__item"><a href="#" class="footer__link">Contact us</a></li>
+                            <li class="footer__item"><a href="#" class="footer__link">Careers</a></li>
+                            <li class="footer__item"><a href="#" class="footer__link">Privacy policy</a></li>
+                            <li class="footer__item"><a href="#" class="footer__link">Terms</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-1-of-2">
+                    <p class="footer__copyright">
+                        Built by <a href="https://github.com/Ch-sriram" class="footer__link">Chandrabhatta Sriram</a> to learn CSS/SASS from <a href="https://www.udemy.com/course/advanced-css-and-sass/" class="footer__link">Jonas Schmedtmann's Advanced CSS & SASS Course</a>. <br>
+                        Design Copyright &copy; Jonas Schmedtmann.
+                    </p>
+                </div>
+            </div> <!--end of .row-->
+        </footer>
+
+        <div class="popup" id="popup">
+            <div class="popup__content">
+                <div class="popup__left">
+                    <img src="img/nat-8.jpg" alt="Tour photo" class="popup__img">
+                    <img src="img/nat-9.jpg" alt="Tour photo" class="popup__img">
+                </div>
+                <div class="popup__right">
+                    <a href="#section-tours" class="popup__close">&times;</a>
+                    <h2 class="heading-secondary u-margin-bottom-small">Start booking now</h2>
+                    <h3 class="heading-tertiary u-margin-bottom-small">Important &mdash; Please read these terms before boooking</h3>
+                    <p class="popup__text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ipsa quia voluptatibus. Fugiat, harum suscipit voluptatem perspiciatis consequuntur sit? Architecto nulla accusamus voluptatibus sed facere, modi obcaecati. Optio, animi voluptas? Ad tenetur in eos quas mollitia harum vero numquam, architecto nemo aliquam quam voluptatum. At quibusdam nisi porro iste, autem quia. Natus, corporis sint officia quidem culpa suscipit fuga adipisci iste voluptatem, minima obcaecati similique! Molestias ad aliquam sit fugit. Quidem laudantium totam dolorem autem dolore distinctio, laboriosam eius molestias consequatur deleniti maiores amet praesentium architecto id aliquid ut ea. Optio amet nihil illum eos rerum culpa dolore voluptatem similique.
+                    </p>
+                    <a href="#section-book" class="btn btn--green">Book now!</a>
+                </div>
+            </div>
+        </div>
+        
+        <!--         
+        <section class="grid-test">
+            <div class="row">
+                 <div class="col-1-of-2">
+                     Col 1 of 2
+                 </div>
+                 <div class="col-1-of-2">
+                     Col 1 of 2
+                 </div>
+            </div>
+            
+            <div class="row">
+                 <div class="col-1-of-3">
+                     Col 1 of 3
+                 </div>
+                 <div class="col-1-of-3">
+                     Col 1 of 3
+                 </div>
+                 <div class="col-1-of-3">
+                     Col 1 of 3
+                 </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1-of-3">
+                    Col 1 of 3
+                </div>
+                <div class="col-2-of-3">
+                    Col 2 of 3
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+                <div class="col-2-of-4">
+                    Col 2 of 4
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+                <div class="col-2-of-4">
+                    Col 2 of 4
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-1-of-4">
+                    Col 1 of 4
+                </div>
+                <div class="col-3-of-4">
+                    Col 3 of 4
+                </div>
+            </div>
+        </section> 
+        -->
+
+        <script type="text/javascript">
+            document.querySelector(".navigation__list").addEventListener("click", () => {
+                document.getElementById("navi-toggle").checked = false;
+            });
+        </script>
+    </body> 
+</html>
