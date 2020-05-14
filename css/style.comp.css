@@ -996,6 +996,20 @@ body {
   .popup__close:hover {
     color: #55c57a; }
 
+#github-link {
+  position: fixed;
+  z-index: 9999 !important;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2.5rem;
+  margin-right: 3.5rem; }
+  #github-link img {
+    width: 4em;
+    opacity: .6;
+    filter: invert(1); }
+    #github-link img:hover {
+      opacity: 1; }
+
 .header {
   height: 85vh;
   background-image: linear-gradient(to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 133, 0.8)), url("../img/hero-small.jpg");
