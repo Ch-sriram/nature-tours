@@ -1,0 +1,19 @@
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    opacity: .15;
+    overflow: hidden;
+
+    &__content {
+        height: 100%;
+        width: 100%;
+
+        // Now the video shrinks the video size to maintain the aspect ratio of the video. Therefore, to force the video in the background to cover the entire .section-stories div, we need to use a new property called object-fit as show below:
+        object-fit: cover;
+        // What this object-fit cover does is that it will cover the entire parent element by maintaining the aspect ratio, while cutting off the extra bits that do not fit the parent element.
+    }
+}

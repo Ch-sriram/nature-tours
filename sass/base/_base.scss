@@ -1,0 +1,66 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    
+    /*
+    We make sure that the default box-sizing property is to be inherited by each and every element that's 
+    the child of the html element. 
+     */
+    box-sizing: inherit;
+    scroll-behavior: smooth;
+}
+
+html {
+    // We can say that font-size should also go into the _typography.scss file, but this here is used as a base definition of font-size for all the elements that are the children of the html element, and therefore, we can say that font-size property is defined in _base.scss aptly.
+
+    // This defines what 1 rem is (which is 10px)
+    font-size: 62.5%;   // 10px/16px = .625 => 62.5%
+    
+    /* 
+    Default font-size specified by the browser is 16px, and to set the root font-size to 10px, we calculate 10px to be 62.5% of 16px, and that's why we use that number.
+
+    Also, we don't directly hard-code 10px to be the default font-size for the website because that'll affect the people who view the webpage using using their own font-size.
+
+    Therefore, it is always better to use percentage, instead of absolute pixel value. The percentage mentioned will translate depending on the browser's default pixel value as explained above.
+    */
+
+    // This is how we send the content to a mixin. In the actual definition of the mixin, we have to use @content directive.
+    // @include respond(phone) {
+    //     font-size: 50%;
+    // }
+
+    @include respond(big-desktop) { // >= 1800px
+        // we want 1rem = 12px => 12px/16px = 75%
+        font-size: 75%;
+    }
+
+    @include respond(tab-land) { // <= 1200px
+        // we want 1rem = 9px => 9px/16px = 56.25%
+        font-size: 56.25%;
+    }
+
+    @include respond(tab-port) { // <= 900px
+        // we want 1rem = 8px => 8px/16px = 50%
+        font-size: 50%;
+    }
+
+
+}
+
+body {
+    box-sizing: border-box;
+    /* borders and padding are no longer added to the total width or the total height of the element */
+    padding: 3rem;
+
+    @include respond(tab-port) {
+        padding: 0;
+    }
+}
+
+
+::selection {
+    background-color: $color-primary;
+    color: $color-white;
+}

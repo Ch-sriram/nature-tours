@@ -1,0 +1,133 @@
+.popup {
+    
+    // CLOSED STATE
+
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba($color-black, .8);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s;
+    
+    // backdrop-filter property is a fairly new property and therefore, if we want any browser to read some of the latest properties, we need to use the @supports conditional to check whether a property is supported or not, and if it does, then we'll want the browser to apply some more CSS rules, shown as follows:
+    @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba($color-black, .3);
+    }
+
+    &__content {
+        position: absolute;
+        @include center-element;
+        transform: translate(-50%, -50%) scale(.25);
+        width: 75%;
+        background-color: $color-white;
+        // height: 50rem;   // TESTING
+        box-shadow: 0 2rem 4rem rgba($color-black, .2);
+        border-radius: 3px;
+        display: table; 
+        overflow: hidden;
+        transition: all .4s .2s;
+
+        @include respond(phone) {
+            width: 90%;
+        }
+    }
+
+    &__left {
+        width: 33.333333%;
+        display: table-cell;
+
+        @include respond(tab-land) { width: 40%; }
+        @include respond(tab-port) { width: 0; }
+    }
+
+    &__right {
+        width: 66.666667%;
+        display: table-cell;
+        vertical-align: middle; // top & bottom are also there
+        padding: 3rem 5rem;
+
+        @include respond(tab-land) { width: 60%; }
+        @include respond(tab-port) { width: 100%; }
+    }
+
+    &__img {
+        display: block;
+        width: 100%;
+        // height: 20%;
+
+        @include respond(tab-land) { height: 25%; }
+        @include respond(tab-port) { display: none; }
+    }
+
+    &__text {
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+
+        // divides the div into two equal columns
+        column-count: 2;    
+
+        // gives a hap between the equally divided columns
+        column-gap: 4rem;   // 1em = 14px; 1rem = 16px; (rem from root and em from the current element's font size)
+        
+        // gives a creasing between the divided columns
+        column-rule: 1px solid $color-grey-light-2;
+
+        // to include hyphenation, we use the foll. property
+        hyphens: auto;  // other two are none and manual.
+        -moz-hyphens: auto;
+        -webkit-hyphens: auto;
+        -o-hyphens: auto;
+        -ms-hyphens: auto;
+
+        @include respond(tab-land) {
+            font-size: 1.2rem;
+        }
+
+        @include respond(tab-port) { font-size: 1.8rem; }
+
+        @include respond(phone) {
+            font-size: 1.3rem;
+            column-count: 1;
+        }
+    }
+
+
+    // OPEN STATE
+
+    // the buttons on the cards are basically anchors which target this element with the id="popup". And so, we use the :target pseudo-class to show what should happen when this element is targeted.
+    &:target {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &:target &__content {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+
+    &__close {
+        &:link,
+        &:visited {
+            color: $color-grey-dark;
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            font-size: 3rem;
+            text-decoration: none;
+            display: inline-block;
+            line-height: 1;
+            transition: all .2s;
+        }
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+}

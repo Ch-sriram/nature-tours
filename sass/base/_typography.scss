@@ -1,0 +1,105 @@
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    color: $color-grey-dark;
+}
+
+
+.heading-primary {
+    color: $color-white;
+    text-transform: uppercase;
+    
+    /* To remove any shakiness after the animation */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    margin-bottom: 6rem;
+
+    
+    &--main {
+        display: block;
+        font-size: 6rem;
+        font-weight: 400;
+        letter-spacing: 3.5rem;
+        
+        /* 
+        for an animation to be applied to an HTML element, we have only two properties in CSS that needs to be defined.
+        One is, animation-name property and the other is animation-duration.
+        There's one other animation property known as animation-timing-function property, which defines how the animation will proceed, which means, how fast/slow the animation is supposed to proceed. 
+        There are different animation-timing-function values which are ease-out, ease-in, ease-in-out, linear, etc. 
+        */
+        animation-name: moveInLeft;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+        
+        /* Some more interesting CSS3 animation properties
+        animation-delay: 0.2s; // There's a delay of 0.2s before the animation starts
+        animation-iteration-count: 3; // Animation happens 3 times.
+        */
+        @include respond(phone) {
+            letter-spacing: 1rem;
+            font-size: 6rem;
+        }
+        
+    }
+    
+    &--sub {
+        display: block;
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1.75rem;
+        
+        /*Instead of adding the 3 properties as seen above one-by-one, we can simply add all of them with a single property called animation*/
+        
+        animation: moveInRight 1s ease-out;
+        -webkit-animation: moveInRight 1s ease-out;
+        
+        @include respond(phone) {
+            letter-spacing: .5rem;
+        }
+    }
+}
+
+
+.heading-secondary {
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    @include text-gradient;
+    letter-spacing: .2rem;
+
+    transition: all .2s;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+
+    @include respond(tab-port) { font-size: 3rem; }
+    @include respond(phone) { font-size: 2.5rem; }
+    
+    &:hover {
+        transform: skewY(2deg) skewX(15deg) scale(1.1);
+        -webkit-transform: skewY(2deg) skewX(15deg) scale(1.1);
+        -moz-transform: skewY(2deg) skewX(15deg) scale(1.1);
+        -ms-transform: skewY(2deg) skewX(15deg) scale(1.1);
+        -o-transform: skewY(2deg) skewX(15deg) scale(1.1);
+        
+        text-shadow: .5rem 1rem 2rem rgba($color-black, .2);
+    }
+}
+
+
+.heading-tertiary {
+    font-size: $default-font-size;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.paragraph {
+    font-size: $default-font-size;
+
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}

@@ -1,0 +1,173 @@
+.form {
+    
+    &__group:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+    
+    // input elements never inherit the font of the parent, they've their own default font-family and font-color, and therefore, we generally have to write code to change the font related to input elements
+    &__input {
+        font-size: 1.5rem;
+        font-family: inherit;
+        color: inherit;
+        padding: 1.5rem 2rem;
+        border-radius: 2px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        -ms-border-radius: 2px;
+        -o-border-radius: 2px;
+        background-color: rgba($color-white, .5);
+        border: none;
+        border-bottom: 3px solid transparent;
+        width: 90%;
+        display: block;
+        transition: all .3s;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+        
+        @include respond(tab-port) { width: 100%; }
+
+        &:focus {
+            // to remove the blue border on the input box when clicked on the box
+            outline: none;  
+            box-shadow: 0 1rem 2rem rgba($color-black, .1);
+            border-bottom: 3px solid $color-primary;
+            
+            // For an input element inside a form, we can use the :valid and :invalid pseudo-classes using which we can apply more styling depending on the input state in the form.
+            &:invalid {
+                border-bottom: 3px solid $color-secondary-dark;
+            }
+        }
+        
+        // To style the placeholder inside the input elements, we use the following pseudo-element as shown below.
+        &::-webkit-input-placeholder {
+            color: $color-grey-dark-2;
+        }
+
+    }
+
+
+    &__label {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-left: 2rem;
+        margin-top: .7rem;
+        display: block;
+        
+        transition: all .3s;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+
+        transform: translateY(-8rem);
+        -webkit-transform: translateY(-8rem);
+        -moz-transform: translateY(-8rem);
+        -ms-transform: translateY(-8rem);
+        -o-transform: translateY(-8rem);
+    }
+
+    // To make sure that the label is not visible until we type something in the input element, for that, we need to select the element which is the immediate adjacent element to .form__input class, which is .form__label class. 
+    // To select the immediate adjacent element, we use the + (plus) operator. 
+    // Now, if we want to select any adjacent element in general, we use the ~ (tilde) operator.
+    // To know that something has been typed in the input element, we use the :placeholder-shown pseudo-class along with the .form__input class.
+    
+    // When the :placeholder-shown pseudo-class is active (meaning - the user hasn't typed anything inside the input element), we want to hide the input label which is referred by .input__label class.
+    &__input:placeholder-shown + &__label {
+        // we used visibility and opacity when both of them do the same thing essentially, which is to hide the element in question.
+        // and that's because using opacity, we cannot animate the label's transition, and therefore, we need the visibility property for that.
+        opacity: 0;
+        visibility: hidden;
+
+        // as soon as the the user starts typing into the input element, :placeholder-shown pseudo-class no longer applies to the input element and therefore, the label will move to its respective place showing a nice transition.
+        transform: translateY(-4rem);
+        -webkit-transform: translateY(-4rem);
+        -moz-transform: translateY(-4rem);
+        -ms-transform: translateY(-4rem);
+        -o-transform: translateY(-4rem);
+    }
+
+
+    &__radio-group {
+        width: 49%;
+        display: inline-block;
+
+        @include respond(tab-port) {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+    }
+
+    // We will hide the original radio input button.
+    &__radio-input { display: none; }
+
+    &__radio-label {
+        font-size: $default-font-size;
+        cursor: pointer;
+        position: relative; // since we use absolute positioning in .form__radio-button to position the custom-made radio button.
+        padding-left: 4rem;
+    }
+
+    // Our custom radio button
+    &__radio-button {
+        // The custom radio button has two parts:
+        // 1. An outer-ring, and when we click the label, 
+        // 2. there will be an inner-dot, which we will add using the ::after pseudo-element show below.
+        height: 3rem;
+        width: 3rem;
+        border: 5px solid $color-primary;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: -.4rem;
+
+
+        &::after {
+            content: "";
+            display: block;
+            height: 1.3rem;
+            width: 1.3rem;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -o-border-radius: 50%;
+            position: absolute;
+            @include center-element;
+            background-color: $color-primary;
+
+            // to make sure that the inner-dot is not visible until the label
+            // is clicked which triggers the :checked pseudo-class of the 
+            // radio input, which is actually hidden. Therefore, we give an 
+            // opacity of 0 till then, for the inner-dot.
+            opacity: 0; 
+            transition: opacity .2s;
+            -webkit-transition: opacity .2s;
+            -moz-transition: opacity .2s;
+            -ms-transition: opacity .2s;
+            -o-transition: opacity .2s;
+        }
+
+    }
+
+    // Now on the custom made radio button, we need to give it an effect of 
+    // the radio-button being checked, and to do that, we have pseudo-class 
+    // for a normal HTML radio input called :checked on which we will apply
+    // the inner-dot inside the span element, only when the hidden radio 
+    // input (which is associated to .form__radio-input class) is checked.
+    // And the radio input gets checked when the user clicks on the custom
+    // radio-button that we made, which is actually a label.
+    &__radio-input:checked ~ &__radio-label &__radio-button::after { opacity: 1; }
+
+    // We can see that the selector is rather complicated, but we have no 
+    // other way to select the inner-dot of the radio-button but to select
+    // it via the general sibling selector (using ~) or using the immediate
+    // sibling selector (using +).
+
+}

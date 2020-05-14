@@ -1,0 +1,74 @@
+@mixin clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin background($path, $col-light, $col-dark) {
+    background-image: linear-gradient(to right bottom, 
+    rgba($col-light, 0.8), 
+    rgba($col-dark, 0.8)), url($path);
+    background-size: cover;
+}
+
+@mixin text-gradient {
+    display: inline-block;
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+@mixin center-element {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+
+
+// MEDIA QUERY MANAGER (All in one mixin)
+
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet Portrait
+900 - 1200px:   Tablet Landscape
+[1200 - 1800px] is where our normal styles apply
+>= 1800px:      Big desktop
+
+$breakpoint argument choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+Inside a media query, we don't use rem units because they do no inherit the root font-size that we (the author of the webpage) set as the default size.
+
+Instead, we use the em units where 1em = 16px by default.
+
+ORDER of media-queries: 
+Base + typography > general layout > page layout > components
+*/
+
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 37.5em) {    // 600px/16px = 37.5em
+            // we can pass in a block of code into a mixin using @content directive.
+            @content
+        };
+    }
+    @if $breakpoint == tab-port {   // 900px/16px = 56.25em
+        @media only screen and (max-width: 56.25em) { @content };
+    }
+    @if $breakpoint == tab-land {   // 1200px/16px = 75em
+        @media only screen and (max-width: 75em) { @content };  
+    }
+    @if $breakpoint == big-desktop {   // 1800px/16px = 112.5em
+        @media only screen and (min-width: 112.5em) { @content };
+    }
+}
